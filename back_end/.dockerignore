@@ -1,0 +1,10 @@
+# 不提交 git 文件夹
+.git
+# 不提交依赖文件夹
+node_modules
+# 不提交 git 排除文件列表
+.gitignore
+# 不提交 .md 文件类型的文件
+*.md
+# 保留 README*.md
+!README*.md

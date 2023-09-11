@@ -24,7 +24,7 @@ app.use(require('./middleware/requestHeaderMiddleware'));
 app.use(require('./middleware/tokenMiddleware'));
 
 // 配置路由
-/*app.get('/hello', (req, res, next) => {
+/*app.get('/api/user/hello', (req, res, next) => {
     res.send("HelloWorld!");
 })*/
 

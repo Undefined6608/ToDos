@@ -19,8 +19,17 @@ router.post('/phoneOccupy', userCtrl.phoneOccupy);
 // 注册
 router.post('/register', userCtrl.register);
 
+// 发送邮箱验证码
+router.post('/sendEmailCode', userCtrl.sendEmailCode);
+
+// 忘记密码
+router.post('/forgetPassword', userCtrl.forgetPassword);
+
 // 电话号码登录
 router.post('/phoneLogin', userCtrl.phoneLogin);
+
+// 获取用户信息
+router.get('/getUserInfo', userCtrl.queryUserInfo);
 
 // 退出登录
 router.post('/logout', userCtrl.logout);

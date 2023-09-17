@@ -14,6 +14,16 @@ const occupySQL = async (tag, value) => {
 }
 
 /**
+ * 通过邮箱查询用户
+ * @param email
+ * @returns {Promise<OkPacket|ResultSetHeader|ResultSetHeader[]|RowDataPacket[]|RowDataPacket[][]|OkPacket[]|[RowDataPacket[], ResultSetHeader]>}
+ */
+const userIdByEmail = async (email) => {
+    const [query, _] = await pool.execute('SELECT uid from sys_user WHERE email=?', [email]);
+    return query;
+}
+
+/**
  * 注册 SQL
  * @param userInfo
  * @returns {Promise<number>}
@@ -34,7 +44,12 @@ const phoneLoginSQL = async (phone) => {
     // 调用 SQL 查询账号信息
     const [query, _] = await pool.execute('SELECT uid,phone,pwd,available,power from sys_user WHERE phone=?', [phone]);
     // 返回 SQL 执行后返回的值
-    return query[0];
+    return query;
+}
+
+const modifyPasswordSQL = async (uid, password) => {
+    const [update, _] = await pool.execute('UPDATE sys_user SET pwd=? WHERE uid=?', [password, uid]);
+    return update;
 }
 
 /**
@@ -88,7 +103,7 @@ const insertToken = async (uid, token) => {
  */
 const deleteToken = async (uid) => {
     // 调用 SQL 删除表内 Token
-    const [del,_] = await pool.execute('DELETE FROM sys_token WHERE user_id = ?', [uid]);
+    const [del, _] = await pool.execute('DELETE FROM sys_token WHERE user_id = ?', [uid]);
     // 返回 SQL 执行后的返回值
     return del.affectedRows === 1;
 }
@@ -98,9 +113,11 @@ module.exports = {
     occupySQL,
     registerSQl,
     phoneLoginSQL,
+    modifyPasswordSQL,
     getTokenSQL,
     verifyTokenSQL,
     modifyTokenSQL,
     insertToken,
-    deleteToken
+    deleteToken,
+    userIdByEmail
 }

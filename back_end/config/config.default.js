@@ -41,7 +41,13 @@ const db = () => {
 }
 
 // 定义电话号码格式正则
-const phoneRegExp = /^1[3456789]\d{9}$/;
+const phoneRegExp = /^(13[0-9]|14[5-9]|15[0-35-9]|16[6]|17[0-8]|18[0-9]|19[0-9]|147|166|192|198|17[0-1]|162)\d{8}$/;
+
+// 定义邮箱格式正则
+const emailRegExp = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+// 定义验证码格式
+const codeRegExp = /^\d{6}$/;
 
 // 定义密码私钥
 const pwdPrivateKey = 'ce351a70-c5ee-475f-acf9-69a7a8d59091';
@@ -54,6 +60,31 @@ const tokenPrivateKey = 'bce703d8-9d47-4724-aa78-27d412c614a5';
 // 定义 Token 过期时间(一天)
 const tokenExpiresIn = 60 * 60 * 24
 
+//发送邮件需要的入参
+const getEmailParam = (toEmail, code) => {
+    return {
+        //邮箱类型，@qq.com就传qq，@163.com就是传163，不传的话默认为qq，
+        //其余类型可以在node_modules/node-send-email/service.js中找到。
+        type: 'qq',
+        // 发件人
+        name: 'CoBlog站长',
+        // 发件箱，要与收件箱邮箱类型一致
+        from: 'co-blog@qq.com',
+        // 发件箱smtp,需要去邮箱—设置–账户–POP3/SMTP服务—开启—获取stmp授权码
+        smtp: 'qgiegwujfquqbjfd',
+        // 发送的邮件标题
+        subject: '验证码',
+        // 收件箱，要与发件箱邮箱类型一致
+        to: toEmail,
+        // 邮件内容，HTML格式
+        html: `
+            <p>您好！</p>
+            <p>您的验证码是：<strong style="color:orangered;">${code}</strong></p>
+            <p>如果不是您本人操作，请无视此邮件</p>
+        `
+    }
+};
+
 // 抛出对象
 module.exports = {
     logger,
@@ -62,5 +93,8 @@ module.exports = {
     tokenPrivateKey,
     tokenExpiresIn,
     encryptionLevel,
-    phoneRegExp
+    codeRegExp,
+    phoneRegExp,
+    emailRegExp,
+    getEmailParam
 }

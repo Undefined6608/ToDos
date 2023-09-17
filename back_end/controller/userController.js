@@ -259,6 +259,10 @@ const modifyPassword = async (req, res, next) => {
     }
     const update = await modifyPasswordSQL(user.uid, body.newPassword);
     if (update.changedRows !== 1) return res.send(resultType(FAIL, "修改失败！"));
+    // 删除 Token
+    const deleteStatus = await deleteToken(user.uid);
+    // 删除失败
+    if (!deleteStatus) return res.send(resultType(SUCCESS, "修改成功！"));
     res.send(resultType(SUCCESS, "修改成功，请重新登录！"));
 }
 

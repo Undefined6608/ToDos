@@ -11,7 +11,7 @@ router.use('/todo',require('./todosRouter'));
 // 专注子路由
 router.use('/intent',require('./concentrateOnRouter'));
 // 反馈子路由
-router.use('/feedback',require('./feedbackRouter'));
+router.use('/feedback',require('./feedBackRouter'));
 
 // 抛出路由
 module.exports = router;

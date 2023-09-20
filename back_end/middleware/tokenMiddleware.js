@@ -12,6 +12,7 @@ module.exports = async function (req, res, next) {
     const excludedPaths = [
         '/api/user/hello',
         '/api/user/phoneOccupy',
+        '/api/user/emailOccupy',
         '/api/user/register',
         '/api/user/phoneLogin',
         '/api/user/sendEmailCode',

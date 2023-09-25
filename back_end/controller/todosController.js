@@ -129,6 +129,7 @@ const deleteToDo = async (req, res, next) => {
     try {
         // 获取 传入的参数
         const body = req.body;
+        console.log(body);
         // 获取用户信息
         const userInfo = req.user;
         // 判断参数为空
@@ -138,6 +139,7 @@ const deleteToDo = async (req, res, next) => {
         // 验证参数是否安全
         // 向数据库中更新完成项
         const deleteStatus = await delToDoSQL(body.id, userInfo.uid);
+        console.log(deleteStatus.serverStatus)
         // 删除失败
         if (deleteStatus.changedRows !== 1) return res.send(resultType(FAIL, "删除失败！"));
         // 删除成功
